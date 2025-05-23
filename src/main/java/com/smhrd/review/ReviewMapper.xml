@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smhrd.review.ReviewMapper">
+
+	<select id="ReviewList" resultType="com.smhrd.review.ReviewVO">
+		SELECT * FROM tb_review
+	</select>
+
+    <select id="getReview" parameterType="int" resultType="com.smhrd.review.ReviewVO">
+        SELECT * FROM tb_review WHERE review_idx = #{review_idx}
+    </select>
+
+    <select id="getTotalCount" resultType="int">
+        SELECT COUNT(*) FROM tb_review
+    </select>
+
+    <select id="getReviewsByPage" resultType="com.smhrd.review.ReviewVO">
+    <![CDATA[
+        SELECT * FROM (
+            SELECT ROWNUM rn, a.*
+            FROM (
+                SELECT * FROM tb_review ORDER BY created_at DESC
+            ) a
+            WHERE ROWNUM <= #{endRow}
+        )
+        WHERE rn >= #{startRow}
+    ]]>
+    </select>
+    
+     <select id="MyReview" resultType="com.smhrd.review.ReviewVO">
+    <![CDATA[
+        SELECT * FROM (
+            SELECT ROWNUM rn, a.*
+            FROM (
+                SELECT * FROM tb_review 
+                where id =#{id}
+                ORDER BY created_at DESC
+            ) a
+            WHERE ROWNUM <= #{endRow}
+        )
+        WHERE rn >= #{startRow}
+    ]]>
+    </select>
+
+    <update id="updateReviewViews" parameterType="int">
+        UPDATE tb_review SET review_views = review_views + 1
+        WHERE review_idx = #{reviewIdx}
+    </update>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+	<select id="ReviewSearch" resultType="com.smhrd.review.ReviewVO">
+		select * from tb_review
+		<where>
+			<choose>
+				<when test="param1 == 'review_title'">
+					review_title LIKE '%' || #{param2} || '%'
+				</when>
+				<when test="param1 == 'review_content'">
+					review_content LIKE '%' || #{param2} || '%'
+				</when>
+				<when test="param1 == 'id'">
+					id LIKE '%' || #{param2} || '%'
+				</when>
+				<otherwise>
+					id = null
+				</otherwise>
+			</choose>
+		</where>
+	</select>
+
+	<insert id="write" parameterType="com.smhrd.review.ReviewVO">
+		insert into tb_review(review_title, review_content, review_file, created_at,
+		updated_at, review_views, id) values(
+		#{review_title},
+		#{review_content}, #{review_file}, systimestamp, systimestamp,
+		#{review_views}, #{id}
+		)
+	</insert>
+
+</mapper>

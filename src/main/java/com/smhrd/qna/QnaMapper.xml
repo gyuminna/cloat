@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smhrd.qna.QnaMapper">
+
+	<select id="QnaList" resultType="com.smhrd.qna.QnaVO">
+		SELECT * FROM tb_qna
+	</select>
+
+    <select id="getQna" parameterType="int" resultType="com.smhrd.qna.QnaVO">
+        SELECT * FROM tb_qna WHERE qna_idx = #{qna_idx}
+    </select>
+
+    <select id="getTotalCount" resultType="int">
+        SELECT COUNT(*) FROM tb_qna
+    </select>
+    
+    
+
+    <select id="getQnasByPage" resultType="com.smhrd.qna.QnaVO">
+    <![CDATA[
+        SELECT * FROM (
+            SELECT ROWNUM rn, a.*
+            FROM (
+                SELECT * FROM tb_qna ORDER BY created_at DESC
+            ) a
+            WHERE ROWNUM <= #{endRow}
+        )
+        WHERE rn >= #{startRow}
+    ]]>
+    </select>
+    
+    <select id="MyQna" resultType="com.smhrd.qna.QnaVO">
+    <![CDATA[
+        SELECT * FROM (
+            SELECT ROWNUM rn, a.*
+            FROM (
+                SELECT * FROM tb_qna 
+                WHERE ID = #{id}
+                ORDER BY created_at DESC
+            ) a
+            WHERE ROWNUM <= #{endRow}
+        )
+        WHERE rn >= #{startRow}
+    ]]>
+    </select>
+    
+
+    <update id="updateQnaViews" parameterType="int">
+        UPDATE tb_qna SET qna_views = qna_views + 1
+        WHERE qna_idx = #{qnaIdx}
+    </update>
+
+
+
+
+    
+    
+    
+    
+	<select id="QnaSearch" resultType="com.smhrd.qna.QnaVO">
+		select * from tb_qna
+		<where>
+			<choose>
+				<when test="param1 == 'qna_title'">
+					qna_title LIKE '%' || #{param2} || '%'
+				</when>
+				<when test="param1 == 'qna_content'">
+					qna_content LIKE '%' || #{param2} || '%'
+				</when>
+				<otherwise>
+					admin_id = null
+				</otherwise>
+			</choose>
+		</where>
+	</select>
+
+	<insert id="write" parameterType="com.smhrd.qna.QnaVO">
+		insert into tb_qna(qna_title, qna_content, qna_file, created_at,
+		qna_views, id) values(
+		#{qna_title}, #{qna_content}, #{qna_file}, systimestamp, #{qna_views}, #{id}
+		)
+	</insert>
+
+</mapper>

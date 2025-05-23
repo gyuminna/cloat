@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CLOAT, 이미지 클로킹 서비스</title>
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+
+<body id="cloat">
+	<div id="header"></div>
+	<!-- header 끝 -->
+
+	<!-- 여기부터 가져가세요 --> 
+	<section class="content board view list">
+		<div class="page_top">
+			<div class="inner">
+				<h2 id="pageName">게시판 이름</h2>
+			</div>
+		</div>			
+		<div class="inner">
+			<div class="view_wrap">
+				<div class="view_top">
+					<h3 class="view_title">제목이 출력됩니다.</h3>
+					<div class="view_info">
+						<div class="view_info_lt">
+							<p><span>작성자</span>suyeonh</p>
+							<p><span>조회수</span>5</p>
+						</div>
+						<div class="view_info_rt">
+							<p><span>작성일</span>2025.05.19 19:17:00</p>
+						</div>
+					</div>
+				</div>
+				<div class="view_btm">
+					<div class="view_content">
+						글 내용이 출력됩니다 글 내용이 출력됩니다 글 내용이 출력됩니다 글 내용이 출력됩니다 글 내용이 출력됩니다 글 내용이 출력됩니다 글 내용이 출력됩니다 글 내용이 출력됩니다 글 내용이 출력됩니다 글 내용이 출력됩니다 글 내용이 출력됩니다 
+					</div>					
+					<!-- 첨부파일이 있다면 
+					 	- 이미지 파일일 경우 : 이미지로 보여주기
+						- 다른 파일일 경우 : a태그로 다운로드 가능하도록
+					-->
+					<a href="img\p_next.png" download class="view_file">
+						<span class="g-icon c_main material-symbols-rounded">attachment</span>
+						<div class="view_file_info">
+							<p>첨부한파일이름.zip</p><!-- 파일 이름.확장자 -->
+							<small>2.4MB</small> <!-- 파일 크기 -->
+						</div>
+						<span class="g-icon material-symbols-rounded ml-auto" style="font-variation-settings:'wght' 300">download</span>
+					</a>
+				</div>	
+			</div>		
+			
+			<!-- 댓글 목록 -->
+			<div class="cmt_wrap">
+				<!-- 댓글이 있다면 : 댓글리스트 출력(게시글당 댓글 1개만 가능!) -->
+				<ul class="cmt_list">
+					<li>
+						<div class="cmt_box">
+							<div class="cmt_top">
+								<div class="cmt_mb">
+									<!-- 프로필 이미지 출력 / 등록된 이미지 없다면 기본이미지 user.png -->
+									<div class="mb_img"><img src="/img/logo.svg" alt=""></div>
+									<div class="mb_id">관리자</div>
+								</div>
+								<!-- 댓글 쓴 본인만 보이게 -->
+								<div class="cmt_BtnWrap">
+									<button class="cmt_toggle stn" onClick="popCmtBtn(this)"><img src="/img/more_vert.png" alt=""></button>
+									<div class="cmt_Btn">
+										<a href="">수정</a>
+										<a href="">삭제</a>
+									</div>
+								</div>
+								<script>
+									function popCmtBtn(el){
+										$(el).siblings('.cmt_Btn').toggleClass("on");
+									}
+								</script>
+							</div>
+							<div class="cmt_btm">
+								<p class="cmt_cont">안녕하세요 CLOAT에 관심 가져주셔서 감사합니다 어쩌구저쩌구</p>
+								<!-- 처음에 날짜/시간 작성됨 -> 수정되면 날짜/시간 수정됨으로 변경?? 얘기해보기! -->
+								<div class="cmt_time">2025.05.20 14:54:58 수정됨</div>
+							</div>
+
+						</div>
+					</li>
+				</ul>
+				<!-- 댓글 입력창 / 권한에 따라 현재는 관리자만 보이게 ? -->
+				<div class="cmt_write">
+					<div class="cmt_mb">
+						<div class="mb_img"><img src="/img/logo.svg" alt=""></div>
+						<div class="mb_id">내 아이디 출력</div>
+					</div>
+					<textarea class="txtarea" name="" id="" placeholder="답변 내용을 입력하세요"></textarea>
+					<div class="cmt_bttn bttn_wrap">
+						<button class="bttn bttn_sbm">입력</button>
+					</div>					
+				</div>
+			</div>
+			
+			<!-- 버튼목록 -->
+			<div class="bttn_wrap">
+				<div>
+					<a href="boardWrite.html" class="bttn ipt_sbm">글쓰기</a>
+					<!-- 해당 글 작성자 / admin 만 보임 -->
+					<button onClick="" class="bttn">수정</button>
+					<button onClick="" class="bttn">삭제</button>
+					<!-- 답변 작성 admin만 가능 ? -->
+					<button onClick="" class="bttn">답변</button>
+					
+				</div>
+				<div>
+					<a href="boardList.html" class="bttn ipt_sbm">목록</a>
+					<button class="bttn" onClick="pageTop()">
+						<img src="img/bk_arr_top.png" alt="">TOP
+					</button>
+				</div>
+			</div>				
+		</div>	
+	</section>
+	<!-- 여기까지 가져가세요 -->
+
+	<!-- footer-->
+	<div id="footer"></div>
+
+	<script>
+		function loadHTML(id, url) {
+			fetch(url)
+				.then(res => res.text())
+				.then(data => {
+					document.getElementById(id).innerHTML = data;
+				});
+		}
+
+		loadHTML("header", "header.html");
+		loadHTML("footer", "footer.html");
+
+		function pageTop(){
+			$('html, body').animate({scrollTop: '0'}, 600);
+		}
+	</script>
+</body>
+
+</html>

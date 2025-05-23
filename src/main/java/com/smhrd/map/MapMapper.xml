@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smhrd.map.MapMapper">
+
+	<select id="map" resultType="com.smhrd.map.MapVO">
+		select * from tb_map 
+	</select>
+	
+	<select id="searchMap" resultType="com.smhrd.map.MapVO">
+		SELECT * FROM tb_map 
+    	WHERE (addr LIKE '%' || #{param1} || '%' 
+       OR org_name LIKE '%' || #{param1} || '%' 
+       OR sido LIKE '%' || #{param1} || '%' 
+       OR sigungu LIKE '%' || #{param1} || '%')
+       and org_type = #{param2}
+	</select>
+	
+	<!-- 지역 -->
+	<select id="searchMap1" resultType="com.smhrd.map.MapVO">
+		SELECT * FROM tb_map 
+    	WHERE (sido LIKE '%' || #{param1} || '%' 
+       OR sigungu LIKE '%' || #{param1} || '%')
+       and org_type = #{param2}
+	</select>
+	
+	<!-- 기관명 -->
+	<select id="searchMap2" resultType="com.smhrd.map.MapVO">
+		SELECT * FROM tb_map 
+    	WHERE org_name LIKE '%' || #{param1} || '%' 
+    	and org_type = #{param2}
+	</select>
+	
+	<!-- 주소 -->
+	<select id="searchMap3" resultType="com.smhrd.map.MapVO">
+		SELECT * FROM tb_map 
+    	WHERE addr LIKE '%' || #{search} || '%' 
+	</select>
+
+</mapper>
